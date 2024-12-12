@@ -15,12 +15,12 @@ def delay_decorator(function):
         print("Greeting is done.   -from decorator\n")
     return wrapper_function   #the function is returned after wrapping
 
-@delay_decorator   #passes say_hello to delay_decorator() and executes the wrapper function
+@delay_decorator   #this ensures say_hello is decorated with additional functionality
 def say_hello():
     print("Hello")
 
 #@ is called "syntactic sugar"
-@delay_decorator   # should be written just above the function to be decorated
+@delay_decorator   # this should be written just above the function to be decorated
 def say_goodbye():
     print("Goodbye")
 
