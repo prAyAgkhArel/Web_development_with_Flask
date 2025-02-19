@@ -1,6 +1,15 @@
-from flask import url_for, Flask, render_template
+from flask import url_for, Flask, render_template, request
 import requests
 from post import Post
+import smtplib
+import os
+
+#sender email connection
+connection = smtplib.SMTP("smtp.gmail.com")
+connection.starttls()
+connection.login(user=os.getenv("EMAIL"), password=os.getenv("PASSWORD"))
+
+
 
 post_objects = []
 response = requests.get(url="https://api.npoint.io/6c9d0e80a9ae677ff1cf")
@@ -19,9 +28,18 @@ def home_page():
 def about_page():
     return render_template('about.html')
 
-@app.route('/contact')
+@app.route('/contact', methods=['POST', 'GET'])
 def contact_page():
-    return render_template('contact.html')
+    if request.method == "POST":
+        data = request.form
+        username = data["username"]
+        email = data["email"]
+        phone = data["phone"]
+        message = data["message"]
+        connection.sendmail(from_addr=os.getenv("EMAIL"), to_addrs=email, msg=f"Subject: Hello {username}!\n\n I got your message:\n{message}! Thank you!")
+        return render_template('contact.html', msg_sent = True)
+    return render_template('contact.html', msg_sent= False)
+
 
 @app.route('/post/<int:id>')
 def post_page(id):
