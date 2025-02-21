@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<body>
+<form action = "{{ url_for('receive_data') }}" method="POST">
+<!--    can write /login directly here but we dynamically get url as it can vary on changing hosting platform-->
+   <input type="hidden" name="form" value="form2"/>
+    <label>Name</label>
+  <input placeholder="name" name="username"/>
+  <label>Password</label>
+  <input placeholder="password" name="password"/>
+  <button>Ok</button>
+</form>
+
+</body>
+</html>
